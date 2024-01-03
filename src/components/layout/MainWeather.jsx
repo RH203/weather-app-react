@@ -2,7 +2,9 @@
 
 const MainWeather = () => {
   return (
-    <div>MainWeather</div>
+    <div>
+      <h1>Hello world</h1>
+    </div>
   )
 }
 
