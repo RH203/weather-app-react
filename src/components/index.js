@@ -1,5 +1,4 @@
-import NavBar from "./navbar/NavBar";
-import MainWeather from "./layout/MainWeather";
-import SecondWeather from "./layout/SecondWeather";
+import SearchBarMain from "./navbar/SearchBarMain";
+import IconWeather from "./layout/IconWeather";
 
-export { NavBar, MainWeather, SecondWeather };
+export { SearchBarMain, IconWeather };

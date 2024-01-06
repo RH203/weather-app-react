@@ -1,3 +1,5 @@
-import WeatherPage from "./hero/WeatherPage";
+import MainWeather from './layout/MainWeather';
+import SecondWeather from './layout/SecondWeather';
 
-export {WeatherPage} ;
+
+export {MainWeather, SecondWeather} ;
