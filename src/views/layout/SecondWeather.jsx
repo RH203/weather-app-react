@@ -1,9 +1,10 @@
-import React from 'react'
-
+import { WidgetWeather } from '../../components'
 
 const SecondWeather = () => {
   return (
-    <div>SecondWeather</div>
+    <div>
+      <WidgetWeather/>
+    </div>
   )
 }
 
