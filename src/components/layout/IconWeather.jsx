@@ -8,11 +8,11 @@ const IconWeather = ({ weatherData, httpError }) => {
     !weatherData.weather ||
     weatherData.weather.length === 0
   ) {
-    return httpError !== 200 ? (
-      <div className="mx-auto text-balance text-lg text-slate-100 font-Ubuntu animate-fadeIn">
-        No weather data available, maybe you entered the wrong city or state name.
+    return (
+      <div className="mx-auto text-center text-lg text-slate-100 font-Ubuntu">
+        No weather data available
       </div>
-    ) : null;
+    );
   }
 
   const weatherInfo = weatherData.weather[0];
@@ -25,25 +25,13 @@ const IconWeather = ({ weatherData, httpError }) => {
   return (
     <div>
       {httpError === 200 && httpError !== 404 && (
-        <div
-          className={`flex justify-center items-center flex-col gap-[2rem] ${
-            httpError === 200 && httpError !== 404
-              ? "animate-fadeIn"
-              : "animate-fadeOut"
-          }`}
-        >
+        <div className="flex justify-center items-center flex-col gap-[2rem] animate-fadeIn">
           <div className="border-b-4 mx-auto">{getIconUrl()}</div>
           <div>
-            <p
-              className="text-center text-2xl text-slate-100 font-Ubuntu flex flex-wrap justify-center capitalize animate-fadeIn 
-"
-            >
+            <p className="text-center text-2xl text-slate-100 font-Ubuntu flex flex-wrap justify-center capitalize animate-fadeIn">
               {(weatherData.main.temp - 275).toFixed(1)} <RiCelsiusLine />
             </p>
-            <p
-              className="mx-auto text-center text-xl text-slate-100 font-Ubuntu border-b-4 flex flex-wrap justify-center capitalize animate-fadeIn
-"
-            >
+            <p className="mx-auto text-center text-xl text-slate-100 font-Ubuntu border-b-4 flex flex-wrap justify-center capitalize animate-fadeIn">
               {weatherInfo.description}
             </p>
           </div>

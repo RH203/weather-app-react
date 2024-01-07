@@ -1,8 +1,12 @@
 // SearchBarMain.jsx
 import { useState } from "react";
+import { useDispatch } from "react-redux";
 import axios from "axios";
-import { IoLocationOutline } from "@react-icons/all-files/io5/IoLocationOutline";
+import { setWeatherData } from "../../actions/action";
 import IconWeather from "../layout/IconWeather";
+
+// Icon
+import { IoLocationOutline } from "@react-icons/all-files/io5/IoLocationOutline";
 // import { GrSearch } from "@react-icons/all-files/gr/GrSearch";
 // import { IconContext } from "react-icons";
 
@@ -11,6 +15,9 @@ const SearchBarMain = () => {
   const [data, setData] = useState(null);
   const [dateAndTime, setGetDateAndTime] = useState({});
   const [httpError, setHttpError] = useState(null);
+
+  const dispatch = useDispatch();
+
   const fetchData = async () => {
     try {
       // console.log(import.meta.env.VITE_API_BASE_KEY);
@@ -19,16 +26,19 @@ const SearchBarMain = () => {
       }`;
       const response = await axios.get(url);
       setData(response.data);
+      dispatch(setWeatherData(response.data))
       setHttpError(200);
       // updateWeatherData(response.data);
     } catch (err) {
       console.error(err);
-      if (err.response && err.response.status === 404) {
-        setHttpError(404);
+      if (err.response) {
+        setHttpError(err.response.status);
       }
     }
   };
 
+  console.log(dispatch);
+  // console.log(setData)
 
   const getDateAndTime = () => {
     const date = new Date();
