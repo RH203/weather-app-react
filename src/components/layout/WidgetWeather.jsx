@@ -4,9 +4,11 @@ import { IoWaterOutline } from "@react-icons/all-files/io5/IoWaterOutline";
 import { IoArrowUp } from "@react-icons/all-files/io5/IoArrowUp";
 import { IoArrowDown } from "@react-icons/all-files/io5/IoArrowDown";
 import { RiCelsiusLine } from "@react-icons/all-files/ri/RiCelsiusLine";
+import { useState, useEffect } from "react";
 
 const WidgetWeather = () => {
   const weatherData = useSelector((state) => state.weather);
+  const [animate, setAnimate] = useState(false);
   // console.log(weatherData)
 
   const humidity = weatherData?.main?.humidity;
@@ -54,11 +56,24 @@ const WidgetWeather = () => {
     });
   };
 
+  useEffect(() => {
+    setAnimate(true);
+
+    const timer = setTimeout(() => {
+      setAnimate(false);
+    }, 1000);
+    return () => clearTimeout(timer);
+  }, [humidity, wind, realFeel, pressure, maxTemp, minTemp, sunrise, sunset]);
+
   return (
     <>
-      {(humidity !== null && humidity !== undefined) && (
+      {humidity !== null && humidity !== undefined && (
         <div className="flex flex-wrap justify-center w-[100%] h-[80%] gap-[2rem]">
-          <div className="bg-slate-700 w-[28%] h-[110px] rounded-md animate-fadeIn">
+          <div
+            className={`bg-slate-700 w-[28%] h-[110px] rounded-md ${
+              animate ? "animate-fadeIn" : ""
+            }`}
+          >
             <p className="font-Ubuntu font-medium text-slate-300 ml-2 mt-1 text-md">
               Wind
             </p>
@@ -70,7 +85,11 @@ const WidgetWeather = () => {
               {degreeToWindDirection(deg)}
             </p>
           </div>
-          <div className="bg-slate-700 w-[28%] h-[110px] rounded-md animate-fadeIn">
+          <div
+            className={`bg-slate-700 w-[28%] h-[110px] rounded-md ${
+              animate ? "animate-fadeIn" : ""
+            }`}
+          >
             <p className="font-Ubuntu font-medium text-slate-300 ml-2 mt-1 text-md">
               Humidity
             </p>
@@ -79,7 +98,11 @@ const WidgetWeather = () => {
               <p className="text-slate-300 font-Ubuntu text-md">{humidity}%</p>
             </div>
           </div>
-          <div className="bg-slate-700 w-[28%] h-[110px] rounded-md animate-fadeIn">
+          <div
+            className={`bg-slate-700 w-[28%] h-[110px] rounded-md ${
+              animate ? "animate-fadeIn" : ""
+            }`}
+          >
             <p className="font-Ubuntu font-medium text-slate-300 ml-2 mt-1 text-md">
               Real Feel
             </p>
@@ -88,13 +111,21 @@ const WidgetWeather = () => {
               <RiCelsiusLine className="text-slate-300 text-lg" />
             </div>
           </div>
-          <div className="bg-slate-700 w-[28%] h-[110px] rounded-md animate-fadeIn">
+          <div
+            className={`bg-slate-700 w-[28%] h-[110px] rounded-md ${
+              animate ? "animate-fadeIn" : ""
+            }`}
+          >
             <p className="font-Ubuntu font-medium text-slate-300 ml-2 mt-1 text-md">
               Pressure
             </p>
             <p className="text-slate-300 ml-2 mt-2">{pressure} mb</p>
           </div>
-          <div className="bg-slate-700 w-[28%] h-[110px] rounded-md animate-fadeIn">
+          <div
+            className={`bg-slate-700 w-[28%] h-[110px] rounded-md ${
+              animate ? "animate-fadeIn" : ""
+            }`}
+          >
             <p className="font-Ubuntu font-medium text-slate-300 ml-2 mt-1 text-md">
               Temperature
             </p>
@@ -113,7 +144,11 @@ const WidgetWeather = () => {
               </div>
             </div>
           </div>
-          <div className="bg-slate-700 w-[28%] h-[110px] rounded-md animate-fadeIn">
+          <div
+            className={`bg-slate-700 w-[28%] h-[110px] rounded-md ${
+              animate ? "animate-fadeIn" : ""
+            }`}
+          >
             <p className="font-Ubuntu font-medium text-slate-300 ml-2 mt-1 text-md">
               Sun
             </p>

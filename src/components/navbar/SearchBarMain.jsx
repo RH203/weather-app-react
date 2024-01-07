@@ -1,5 +1,5 @@
 // SearchBarMain.jsx
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import axios from "axios";
 import { setWeatherData } from "../../actions/action";
@@ -15,6 +15,7 @@ const SearchBarMain = () => {
   const [data, setData] = useState(null);
   const [dateAndTime, setGetDateAndTime] = useState({});
   const [httpError, setHttpError] = useState(null);
+  const [animate, setAnimate] = useState(false);
 
   const dispatch = useDispatch();
 
@@ -91,6 +92,15 @@ const SearchBarMain = () => {
     }
   };
 
+  useEffect(() => {
+    setAnimate(true);
+
+    const timer = setTimeout(() => {
+      setAnimate(false);
+    }, 1000)
+    return () => {clearTimeout(timer)}
+  }, [dateAndTime, httpError])
+
   return (
     <div className="flex flex-col">
       <div className="flex ">
@@ -117,13 +127,13 @@ const SearchBarMain = () => {
       <div className="mt-10">
         {dateAndTime && httpError === 200 && (
           <>
-            <div className="text-center text-base text-slate-100 font-Ubuntu animate-fadeIn animate-fadeOutduration-700">
+            <div className={`text-center text-base text-slate-100 font-Ubuntu ${animate ? "animate-fadeIn" : ""}`}>
               <p>
                 {dateAndTime.getDate} {month[dateAndTime.getMonths]}{" "}
                 {dateAndTime.getYear}
               </p>
             </div>
-            <div className="text-center text-base text-slate-100 font-Ubuntu animate-fadeIn animate-fadeOutduration-700">
+            <div className={`text-center text-base text-slate-100 font-Ubuntu ${animate ? "animate-fadeIn" : ""}`}>
               {dateAndTime.getHours} {dateAndTime.doubleDot}{" "}
               {dateAndTime.getMinutes}
             </div>
