@@ -1,13 +1,12 @@
-import React from 'react'
+import React, { useContext } from "react";
 
 const WidgetWeather = () => {
-  return (
-    <div>
-      <div>
-        
-      </div>
-    </div>
-  )
-}
 
-export default WidgetWeather
+  return (
+    <div className="flex flex-row">
+
+    </div>
+  );
+};
+
+export default WidgetWeather;

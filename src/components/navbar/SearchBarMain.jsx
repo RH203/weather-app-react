@@ -10,20 +10,25 @@ const SearchBarMain = () => {
   const [state, setState] = useState("");
   const [data, setData] = useState(null);
   const [dateAndTime, setGetDateAndTime] = useState({});
-
+  const [httpError, setHttpError] = useState(null);
   const fetchData = async () => {
     try {
-      console.log(import.meta.env.VITE_API_BASE_KEY);
+      // console.log(import.meta.env.VITE_API_BASE_KEY);
       const url = `https://api.openweathermap.org/data/2.5/weather?q=${state}&appid=${
         import.meta.env.VITE_API_BASE_KEY
       }`;
       const response = await axios.get(url);
       setData(response.data);
+      setHttpError(200);
       // updateWeatherData(response.data);
     } catch (err) {
       console.error(err);
+      if (err.response && err.response.status === 404) {
+        setHttpError(404);
+      }
     }
   };
+
 
   const getDateAndTime = () => {
     const date = new Date();
@@ -41,7 +46,7 @@ const SearchBarMain = () => {
       getSeconds,
       getMinutes,
       getHours,
-      doubleDot
+      doubleDot,
     });
   };
 
@@ -85,31 +90,32 @@ const SearchBarMain = () => {
             value={state}
             placeholder="City Name..."
             onChange={handleInputChange}
-            className="bg-slate-700 outline-none rounded-l-md placeholder:italic placeholder:text-slate-400 placeholder:pl-2"
+            className="bg-slate-700 outline-none rounded-l-md placeholder:italic placeholder:text-slate-400 placeholder:pl-2 px-3 py-1 text-slate-200"
             onKeyDownCapture={searchState}
           />
         </div>
         <button
           onClick={handleSearchClick}
-          className="bg-slate-700 rounded-r-md size-[24px] text-slate-100"
+          className="bg-slate-700 rounded-r-md pr-2 text-slate-100"
         >
           <IoLocationOutline />
         </button>
       </div>
       <div className="mt-10">
-        <IconWeather weatherData={data} />
+        <IconWeather weatherData={data} httpError={httpError} />
       </div>
       <div className="mt-10">
-        {dateAndTime && (
+        {dateAndTime && httpError === 200 && (
           <>
-            <div className="text-center text-base text-slate-100 font-Ubuntu">
+            <div className="text-center text-base text-slate-100 font-Ubuntu animate-fadeIn animate-fadeOutduration-700">
               <p>
                 {dateAndTime.getDate} {month[dateAndTime.getMonths]}{" "}
                 {dateAndTime.getYear}
               </p>
             </div>
-            <div className="text-center text-base text-slate-100 font-Ubuntu">
-              {dateAndTime.getHours} {dateAndTime.doubleDot} {dateAndTime.getMinutes}
+            <div className="text-center text-base text-slate-100 font-Ubuntu animate-fadeIn animate-fadeOutduration-700">
+              {dateAndTime.getHours} {dateAndTime.doubleDot}{" "}
+              {dateAndTime.getMinutes}
             </div>
           </>
         )}
